@@ -1,101 +1,40 @@
-import sys
-from asyncio import get_event_loop
-from random import choice, randint
-from threading import Thread
-from time import sleep
+"""Serve a live daggre Graph in the browser over transports — a vanilla Starlette/uvicorn app.
 
-import uvloop
-from fastapi import FastAPI, WebSocket
-from fastapi.responses import FileResponse
-from fastapi.staticfiles import StaticFiles
+    python examples/python/server.py     # -> http://127.0.0.1:8000
 
-sys.path.append("../../python")  # noqa
-from daggre import JSONTransport  # noqa: E402
-from daggre import Graph, StarletteWebSocketServer
+The graph is plain Python (`daggre.Graph`); `daggre.serve` hosts it over transports and serves the
+frontend. The `grow` task mutates the graph over time and every browser updates live.
+"""
 
+import asyncio
+import random
 
-def build_app():
-    # use uvloop
-    uvloop.install()
+import uvicorn
 
-    # create FastAPI app
-    app = FastAPI()
-
-    # serve index.html at /
-    @app.get("/", response_class=FileResponse)
-    def index():
-        return "index.html"
-
-    # construct graph routine to match JS example
-    graph = Graph(direction="left-to-right")
-
-    # function to add nodes to graph
-    def generate_graph(graph):
-        scale = 10
-        begin = 0
-        stop = 100
-        interval = 0.1
-
-        # start by generating a bunch node nodes
-        while begin < stop:
-            # add nodes
-            for i in range(begin, begin + scale):
-                if i > 0:
-                    if i % 2 == 0:
-                        graph.addNode(f"test{i}", color="red")
-                    else:
-                        graph.addNode(f"test{i}", backgroundColor="lightblue")
-                else:
-                    graph.addNode(f"test{i}", backgroundColor="lightgreen")
-                sleep(interval)
-
-            # add edges
-            for i in range(begin, begin + scale):
-                if begin >= scale:
-                    graph.addEdge(
-                        f"test{i-scale}",
-                        f"test{i}",
-                        arrowhead="vee",
-                        line="dash",
-                    )
-                elif i > 0:
-                    graph.addEdge("test0", f"test{i}")
-                sleep(interval)
-
-            # add same level edges
-            for i in range(begin + 1, begin + scale):
-                graph.addEdge(f"test{i-1}", f"test{i}")
-                sleep(interval)
-
-            # shift to next batch
-            begin += scale
-            sleep(interval)
-
-        # then after just flicker the lights forever
-        while True:
-            index = randint(0, stop)
-            color = choice(["red", "blue", "green", "yellow", "orange", "black", "cyan", "magenta"])
-            backgroundColor = choice(["red", "blue", "green", "yellow", "orange", "black", "cyan", "magenta"])
-            graph.addNode(f"test{index}", color=color, backgroundColor=backgroundColor)
-            sleep(interval)
-
-    t = Thread(target=generate_graph, args=(graph,), daemon=True)
-    t.start()
-
-    transport = JSONTransport(event_loop=get_event_loop())
-
-    @app.websocket("/ws")
-    async def websocket_endpoint(websocket: WebSocket):
-        handler = StarletteWebSocketServer(websocket=websocket, transport=transport, model=graph)
-        await handler.handle()
-
-    # mount js assets from js dir
-    app.mount("/js/", StaticFiles(directory="../../js"), name="js")
-
-    # mount everything else in this dir after
-    app.mount("/", StaticFiles(directory="."))
-
-    return app
+import daggre
 
 
-app = build_app()
+def build_graph() -> daggre.Graph:
+    g = daggre.Graph(direction="left-to-right")
+    g.addNode("root", backgroundColor="lightgreen")
+    return g
+
+
+async def grow(g: daggre.Graph) -> None:
+    rng = random.Random(7)
+    i = 0
+    while True:
+        await asyncio.sleep(0.8)
+        if len(g.nodes) >= 24:
+            # recolor an existing node to show live in-place updates
+            g.addNode(rng.choice(list(g.nodes)), color=rng.choice(["red", "blue", "green", "orange"]))
+            continue
+        i += 1
+        parent = rng.choice(list(g.nodes))
+        g.addNode(f"n{i}", backgroundColor="lightblue")
+        g.addEdge(parent, f"n{i}", arrowhead="vee", line="dash" if i % 3 == 0 else "solid")
+
+
+if __name__ == "__main__":
+    app = daggre.serve(build_graph(), title="daggre — live graph", background=grow)
+    uvicorn.run(app, host="127.0.0.1", port=8000)
