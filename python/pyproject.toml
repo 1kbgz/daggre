@@ -31,27 +31,34 @@ classifiers = [
     "License :: OSI Approved :: Apache Software License",
 ]
 dependencies = [
-    "aiohttp",
-    "aiostream",
-    "orjson",
     "pydantic",
     "starlette",
+    "transports",
     "uvicorn",
-    "websockets",
 ]
 
 [project.optional-dependencies]
+widget = [
+    "anywidget",
+    "traitlets",
+]
 develop = [
+    "anywidget",
     "black>=23",
+    "httpx",
     "isort",
     "mypy",
-    "ruff>=0.3,<0.4",
     "pytest",
     "pytest-cov",
+    "ruff>=0.3,<0.4",
+    "traitlets",
 ]
 test = [
+    "anywidget",
+    "httpx",
     "pytest",
     "pytest-cov",
+    "traitlets",
 ]
 
 [project.urls]
