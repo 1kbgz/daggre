@@ -1,8 +1,8 @@
 """daggre inside a spaday app: a spaday component tree (heading + graph) authored in Python, with the
 daggre Graph synced over transports.
 
-The shell is authored with spaday (`element` + the `DagreGraph` component); the browser mounts it with
-the spaday runtime and daggre binds the mounted <dagre-graph> to a transports `Client`. Run (needs
+The shell is authored with spaday (`element("dagre-graph")`); the browser mounts it with the spaday
+runtime and daggre binds the mounted <dagre-graph> to a transports `Client`. Run (needs
 spaday + daggre + transports on the path; spaday built)::
 
     PYTHONPATH=../../python:<spaday repo> python examples/spaday/app.py   # -> http://127.0.0.1:8003
@@ -16,7 +16,6 @@ from pathlib import Path
 import transports
 import uvicorn
 from spaday import element
-from spaday.components import DagreGraph
 from starlette.applications import Starlette
 from starlette.responses import FileResponse, JSONResponse
 from starlette.routing import Mount, Route, WebSocketRoute
@@ -40,7 +39,8 @@ def shell() -> dict:
         element("div", style="font-family:system-ui;max-width:960px;margin:24px auto")
         .child(element("h1", style="font-size:18px").text("daggre inside a spaday app"))
         .child(element("p", style="color:#666;font-size:13px").text("Shell authored in spaday; the graph syncs over transports."))
-        .child(DagreGraph().prop("id", "graph").prop("style", "display:block;height:480px;border:1px solid #e6e6e6;border-radius:10px"))
+        # daggre owns the <dagre-graph> element (its bundle defines it); spaday mounts it by tag
+        .child(element("dagre-graph").prop("id", "graph").prop("style", "display:block;height:480px;border:1px solid #e6e6e6;border-radius:10px"))
         .to_node()
     )
 

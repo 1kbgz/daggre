@@ -21,6 +21,9 @@ export class DagreGraph extends HTMLElement {
     Object.assign(this.renderer.shapes(), customShapes);
     Object.assign(this.renderer.arrows(), customArrows);
     this._direction = "top-to-bottom";
+    this._directed = true;
+    this._multigraph = false;
+    this._compound = false;
     this._nodes = [];
     this._edges = [];
   }
@@ -78,8 +81,39 @@ export class DagreGraph extends HTMLElement {
     this.draw();
   }
 
+  get directed() {
+    return this._directed;
+  }
+
+  set directed(value) {
+    this._directed = value !== false;
+    this.draw();
+  }
+
+  get multigraph() {
+    return this._multigraph;
+  }
+
+  set multigraph(value) {
+    this._multigraph = Boolean(value);
+    this.draw();
+  }
+
+  get compound() {
+    return this._compound;
+  }
+
+  set compound(value) {
+    this._compound = Boolean(value);
+    this.draw();
+  }
+
   build() {
-    const g = new graphlib.Graph({ directed: true });
+    const g = new graphlib.Graph({
+      directed: this._directed,
+      multigraph: this._multigraph,
+      compound: this._compound,
+    });
     g.setGraph({
       rankdir: RANKDIR[this._direction] || "TB",
       nodesep: 50,

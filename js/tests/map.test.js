@@ -21,7 +21,21 @@ describe("toGraphProps", () => {
     expect(props.edges).toEqual([{ from: "a", to: "b", line: "dash", arrowhead: "vee" }]);
   });
 
-  test("defaults direction and tolerates an empty model", () => {
-    expect(toGraphProps({})).toEqual({ direction: "top-to-bottom", nodes: [], edges: [] });
+  test("defaults direction/flags and tolerates an empty model", () => {
+    expect(toGraphProps({})).toEqual({
+      direction: "top-to-bottom",
+      directed: true,
+      multigraph: false,
+      compound: false,
+      nodes: [],
+      edges: [],
+    });
+  });
+
+  test("passes through non-default graph flags", () => {
+    const props = toGraphProps({ directed: false, multigraph: true, compound: true });
+    expect(props.directed).toBe(false);
+    expect(props.multigraph).toBe(true);
+    expect(props.compound).toBe(true);
   });
 });
