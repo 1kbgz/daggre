@@ -17,6 +17,7 @@
   "scripts": {
     "build:esbuild": "esbuild src/index.js src/anywidget.js --bundle --format=esm --outdir=dist/",
     "build:python": "esbuild src/index.js src/anywidget.js --bundle --format=esm --outdir=../python/daggre/static/",
+    "build:wasm": "node -e \"const fs=require('fs'),p=require.resolve('@1kbgz/transports/dist/pkg/transports_bg.wasm');['dist','../python/daggre/static'].forEach(d=>{fs.mkdirSync(d,{recursive:true});fs.copyFileSync(p,d+'/transports_bg.wasm')})\"",
     "build": "npm-run-all -p build:*",
     "clean": "rimraf dist lib",
     "fix": "yarn lint --fix",
