@@ -52,6 +52,14 @@ class Widget(anywidget.AnyWidget):
             for m in msgs:
                 conn.send({"wire": m})
 
+    def close(self, *args: Any, **kwargs: Any) -> None:
+        """Cancel the background pump and drop the transports connection, then close the widget."""
+        if self._pump_task is not None:
+            self._pump_task.cancel()
+            self._pump_task = None
+        self._server.close(self)
+        super().close(*args, **kwargs)
+
     def _start_pump(self) -> None:
         if self._pump_task is not None:
             return

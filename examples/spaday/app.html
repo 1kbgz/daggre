@@ -25,7 +25,8 @@
       const client = new Client();
       const { paint } = attach(document.getElementById("graph"), { client });
 
-      const ws = new WebSocket(`ws://${location.host}/ws`);
+      const proto = location.protocol === "https:" ? "wss:" : "ws:";
+      const ws = new WebSocket(`${proto}//${location.host}/ws`);
       ws.binaryType = "arraybuffer";
       ws.addEventListener("message", (e) => {
         client.recv(typeof e.data === "string" ? e.data : new Uint8Array(e.data));

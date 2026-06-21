@@ -36,7 +36,7 @@ _PAGE = """<!doctype html>
     <script type="module">
       import {{ connect }} from "/static/index.js";
       connect(document.getElementById("graph"), {{
-        wsUrl: `ws://${{location.host}}/ws`,
+        wsUrl: `${{location.protocol === "https:" ? "wss:" : "ws:"}}//${{location.host}}/ws`,
         wasmUrl: "/static/transports_bg.wasm",
       }});
     </script>

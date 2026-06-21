@@ -16,6 +16,9 @@ export function toGraphProps(model) {
   }));
   return {
     direction: (model && model.direction) || "top-to-bottom",
+    directed: model ? model.directed !== false : true,
+    multigraph: Boolean(model && model.multigraph),
+    compound: Boolean(model && model.compound),
     nodes,
     edges,
   };

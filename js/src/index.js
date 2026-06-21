@@ -31,6 +31,9 @@ export function attach(el, { client, modelId } = {}) {
     const props = toGraphProps(model);
     /* eslint-disable no-param-reassign */
     el.direction = props.direction;
+    el.directed = props.directed;
+    el.multigraph = props.multigraph;
+    el.compound = props.compound;
     el.nodes = props.nodes;
     el.edges = props.edges;
     /* eslint-enable no-param-reassign */
