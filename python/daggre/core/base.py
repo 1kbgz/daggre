@@ -6,8 +6,7 @@ to it (and its nested nodes/edges) directly, so the domain carries no sync machi
 
 from uuid import uuid4
 
-from pydantic import BaseModel as PydanticBaseModel
-from pydantic import Field, model_validator
+from pydantic import BaseModel as PydanticBaseModel, Field, model_validator
 
 
 class BaseModel(PydanticBaseModel):

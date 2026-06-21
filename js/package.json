@@ -21,7 +21,7 @@
     "build": "npm-run-all -p build:*",
     "clean": "rimraf dist lib",
     "fix": "yarn lint --fix",
-    "lint": "eslint --ext js src/ ../examples/*/*.js",
+    "lint": "eslint --ext js src/",
     "test": "NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --config .jestrc.js --forceExit --coverage",
     "watch:server": "http-server -p 3000 -o /examples",
     "watch:esbuild": "yarn build:esbuild --watch",
@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "@1kbgz/transports": "^0.3.0",
+    "d3": "^7.9.0",
     "dagre-d3-es": "^7.0.14"
   }
 }

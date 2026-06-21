@@ -5,32 +5,17 @@
 // server, ipywidgets/anywidget, or a spaday app) only provides a connection; the mapping + rendering
 // here are shared. No spaday is needed for the vanilla/widget hosts — only the spaday-app host uses
 // spaday's runtime to mount its tree (which may contain this element).
-import "./dagre-graph.js"; // defines <dagre-graph>
+import "./dagre-graph"; // defines <dagre-graph>
+// eslint-disable-next-line import/no-unresolved
 import { Client, fromValue, wasm } from "@1kbgz/transports";
 
-let _wasmReady;
+import { toGraphProps } from "./map";
+
+let wasmReady;
 /** Initialize transports' wasm core once (idempotent). `wasmUrl` -> transports_bg.wasm. */
 export function initWasm(wasmUrl) {
-  _wasmReady = _wasmReady || wasm.default({ module_or_path: wasmUrl });
-  return _wasmReady;
-}
-
-// Map a daggre Graph wire value (untagged) onto <dagre-graph>'s direction/nodes/edges props.
-function toGraphProps(model) {
-  const nodes = Object.values((model && model.nodes) || {}).map((n) => ({
-    id: n.name,
-    label: n.label || n.name,
-    shape: n.shape,
-    color: n.color,
-    backgroundColor: n.backgroundColor,
-  }));
-  const edges = ((model && model.edges) || []).map((e) => ({
-    from: e.from_.name,
-    to: e.to_.name,
-    line: e.line,
-    arrowhead: e.arrowhead,
-  }));
-  return { direction: (model && model.direction) || "top-to-bottom", nodes, edges };
+  wasmReady = wasmReady || wasm.default({ module_or_path: wasmUrl });
+  return wasmReady;
 }
 
 /**
@@ -44,9 +29,11 @@ export function attach(el, { client, modelId } = {}) {
     const model = fromValue(client.value(id));
     if (!model) return;
     const props = toGraphProps(model);
+    /* eslint-disable no-param-reassign */
     el.direction = props.direction;
     el.nodes = props.nodes;
     el.edges = props.edges;
+    /* eslint-enable no-param-reassign */
   };
   return { el, paint };
 }
@@ -54,7 +41,7 @@ export function attach(el, { client, modelId } = {}) {
 /** Create a <dagre-graph> in `container` and bind it (the standalone case). */
 export function render(container, opts = {}) {
   const el = document.createElement("dagre-graph");
-  el.style.height = el.style.height || "100%";
+  if (!el.style.height) el.style.height = "100%";
   container.appendChild(el);
   return attach(el, { ...opts });
 }
@@ -67,7 +54,9 @@ export async function connect(container, { wsUrl, wasmUrl }) {
   const ws = new WebSocket(wsUrl);
   ws.binaryType = "arraybuffer";
   ws.addEventListener("message", (event) => {
-    client.recv(typeof event.data === "string" ? event.data : new Uint8Array(event.data));
+    client.recv(
+      typeof event.data === "string" ? event.data : new Uint8Array(event.data),
+    );
     paint();
   });
   return { client, ws, el };

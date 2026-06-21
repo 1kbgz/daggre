@@ -136,3 +136,7 @@ line-length = 150
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401", "F403"]
+
+[tool.mypy]
+# transports ships no py.typed (Rust/pyo3 package); don't fail on its missing stubs.
+ignore_missing_imports = true

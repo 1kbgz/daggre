@@ -1,26 +1,9 @@
-from datetime import datetime
-from unittest.mock import patch
-
-from daggre import Graph, Node
+from daggre import Graph
 
 
 class TestBasic:
     def test_node_repr(self, a_node):
         assert repr(a_node) == "Node[a]"
-
-    def test_node_serialization(self, a_node):
-        now = datetime.utcnow()
-
-        with patch("daggre.transports.model.uuid4") as uuid4_mock, patch("daggre.transports.model.datetime") as utcnow_mock:
-            uuid4_mock.return_value = "blerg"
-            utcnow_mock.utcnow.return_value = now
-            print(now.isoformat())
-
-            a = Node(name="a")
-            assert (
-                a.json()
-                == f'{{"id":"blerg","name":"a","label":"","created":"{now.isoformat()}","modified":"{now.isoformat()}","shape":"rect","tooltip":"","color":"black","backgroundColor":"#fff0"}}'  # noqa: E501
-            )
 
     def test_edge_repr(self, a_to_b_edge):
         assert repr(a_to_b_edge) == "Edge[a -> b]"

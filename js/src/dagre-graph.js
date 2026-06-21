@@ -5,7 +5,7 @@
 import * as d3 from "d3";
 import { graphlib, render as makeRender } from "dagre-d3-es";
 
-import { customArrows, customShapes } from "./shapes.js";
+import { customArrows, customShapes } from "./shapes";
 
 const RANKDIR = {
   "top-to-bottom": "TB",
@@ -28,9 +28,18 @@ export class DagreGraph extends HTMLElement {
   connectedCallback() {
     if (!this.style.display) this.style.display = "block";
     if (!this.style.height) this.style.height = "400px";
-    this.svg = d3.select(this).append("svg").attr("width", "100%").attr("height", "100%");
+    this.svg = d3
+      .select(this)
+      .append("svg")
+      .attr("width", "100%")
+      .attr("height", "100%");
     this.inner = this.svg.append("g");
-    this.zoom = d3.zoom().on("zoom", (event) => this.inner && this.inner.attr("transform", event.transform));
+    this.zoom = d3
+      .zoom()
+      .on(
+        "zoom",
+        (event) => this.inner && this.inner.attr("transform", event.transform),
+      );
     this.svg.call(this.zoom);
     this.draw();
   }
@@ -45,6 +54,7 @@ export class DagreGraph extends HTMLElement {
   get direction() {
     return this._direction;
   }
+
   set direction(value) {
     this._direction = value || "top-to-bottom";
     this.draw();
@@ -53,6 +63,7 @@ export class DagreGraph extends HTMLElement {
   get nodes() {
     return this._nodes;
   }
+
   set nodes(value) {
     this._nodes = value || [];
     this.draw();
@@ -61,6 +72,7 @@ export class DagreGraph extends HTMLElement {
   get edges() {
     return this._edges;
   }
+
   set edges(value) {
     this._edges = value || [];
     this.draw();
@@ -77,25 +89,33 @@ export class DagreGraph extends HTMLElement {
     });
     g.setDefaultEdgeLabel(() => ({}));
 
-    for (const n of this._nodes) {
-      const id = String(n.id != null ? n.id : n.name != null ? n.name : "");
-      if (!id) continue;
+    this._nodes.forEach((n) => {
+      const id = String(n.id ?? n.name ?? "");
+      if (!id) return;
       const { id: _id, name: _name, color, backgroundColor, ...rest } = n;
-      const opts = { label: n.label != null ? n.label : id, ...rest };
+      const opts = { label: n.label ?? id, ...rest };
       if (color) opts.labelStyle = `fill: ${color};`;
       if (backgroundColor) opts.style = `fill: ${backgroundColor};`;
       g.setNode(id, opts);
-    }
+    });
 
-    for (const e of this._edges) {
-      const from = String(e.from != null ? e.from : e.source != null ? e.source : "");
-      const to = String(e.to != null ? e.to : e.target != null ? e.target : "");
-      if (!from || !to) continue;
-      const { from: _f, to: _t, source: _s, target: _tg, line, ...rest } = e;
+    this._edges.forEach((e) => {
+      const from = String(e.from ?? e.source ?? "");
+      const to = String(e.to ?? e.target ?? "");
+      if (!from || !to) return;
+      const {
+        from: _from,
+        to: _to,
+        source: _source,
+        target: _target,
+        line,
+        ...rest
+      } = e;
       const opts = { curve: d3.curveBasis, ...rest };
-      if (line === "dash") opts.style = `${opts.style || ""}stroke-dasharray: 5, 5;`;
+      if (line === "dash")
+        opts.style = `${opts.style || ""}stroke-dasharray: 5, 5;`;
       g.setEdge(from, to, opts);
-    }
+    });
     return g;
   }
 
@@ -120,7 +140,10 @@ export class DagreGraph extends HTMLElement {
     const scale = Math.min(w / gw, h / gh, 1.5) * 0.9 || 1;
     const tx = (w - gw * scale) / 2;
     const ty = (h - gh * scale) / 2;
-    this.svg.call(this.zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
+    this.svg.call(
+      this.zoom.transform,
+      d3.zoomIdentity.translate(tx, ty).scale(scale),
+    );
   }
 }
 

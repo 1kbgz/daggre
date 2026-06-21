@@ -18,7 +18,8 @@ const house = (parent, bbox, node) => {
     .attr("points", points.map((d) => `${d.x},${d.y}`).join(" "))
     .attr("transform", `translate(${-w / 2},${(h * 3) / 4})`);
   // eslint-disable-next-line no-param-reassign
-  node.intersect = (point) => intersect.polygon.intersectPolygon(node, points, point);
+  node.intersect = (point) =>
+    intersect.polygon.intersectPolygon(node, points, point);
   return shapeSvg;
 };
 
