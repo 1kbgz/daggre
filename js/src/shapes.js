@@ -1,3 +1,6 @@
+// daggre's custom dagre-d3 shapes/arrows. Baked into daggre's own <dagre-graph> element (no cross-repo
+// extension hook). They only need the d3 selection the renderer hands them plus dagre-d3-es's geometry
+// helper for the polygon intersect.
 import { intersect } from "dagre-d3-es";
 
 const house = (parent, bbox, node) => {
@@ -10,12 +13,10 @@ const house = (parent, bbox, node) => {
     { x: w / 2, y: (-h * 3) / 2 },
     { x: 0, y: -h },
   ];
-
   const shapeSvg = parent
     .insert("polygon", ":first-child")
     .attr("points", points.map((d) => `${d.x},${d.y}`).join(" "))
     .attr("transform", `translate(${-w / 2},${(h * 3) / 4})`);
-
   // eslint-disable-next-line no-param-reassign
   node.intersect = (point) =>
     intersect.polygon.intersectPolygon(node, points, point);
@@ -30,7 +31,7 @@ const hollowpoint = (parent, id, edge, type) => {
     .attr("refX", 9)
     .attr("refY", 5)
     .attr("markerUnits", "strokeWidth")
-    .attr("markerWidget", 8)
+    .attr("markerWidth", 8)
     .attr("markerHeight", 6)
     .attr("orient", "auto");
   const path = marker
@@ -44,11 +45,5 @@ const hollowpoint = (parent, id, edge, type) => {
   return marker;
 };
 
-export const Shapes = {
-  Node: {
-    house,
-  },
-  Arrow: {
-    hollowpoint,
-  },
-};
+export const customShapes = { house };
+export const customArrows = { hollowpoint };

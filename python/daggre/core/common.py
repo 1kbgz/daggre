@@ -1,8 +1,4 @@
-from pydantic.color import Color  # noqa: F401
-from typing import ForwardRef, Literal
-
-# Forward references
-Graph = ForwardRef("Graph")
+from typing import Literal
 
 # Graph
 Direction = Literal["left-to-right", "right-to-left", "top-to-bottom", "bottom-to-top"]

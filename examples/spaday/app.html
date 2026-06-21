@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>daggre × spaday</title>
+    <style>
+      body { margin: 0; background: #fafafa; color: #222; }
+      .node rect, .node polygon, .node circle, .node ellipse { stroke-width: 1.5px; }
+      .edgePath path { stroke: #333; fill: none; stroke-width: 1.5px; }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module">
+      // a spaday app uses spaday's runtime to mount its tree; daggre's bundle defines <dagre-graph>
+      // and provides the transports binding
+      import { mount } from "/spaday/esm/index.js";
+      import { attach, Client, initWasm } from "/static/index.js";
+
+      const shell = await (await fetch("/shell.json")).json();
+      mount(document.getElementById("app"), shell); // spaday renders the tree, incl. <dagre-graph id=graph>
+
+      await initWasm("/static/transports_bg.wasm");
+      const client = new Client();
+      const { paint } = attach(document.getElementById("graph"), { client });
+
+      const ws = new WebSocket(`ws://${location.host}/ws`);
+      ws.binaryType = "arraybuffer";
+      ws.addEventListener("message", (e) => {
+        client.recv(typeof e.data === "string" ? e.data : new Uint8Array(e.data));
+        paint();
+      });
+    </script>
+  </body>
+</html>
