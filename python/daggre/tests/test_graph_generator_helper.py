@@ -15,7 +15,7 @@ def test_graph_generator_helper():
                     graph.addNode(f"test{i}", color="red")
                 else:
                     graph.addNode(f"test{i}", backgroundColor="lightblue")
-                graph.addEdge(f"test{i-1}", f"test{i}")
+                graph.addEdge(f"test{i - 1}", f"test{i}")
             else:
                 graph.addNode(f"test{i}", backgroundColor="lightgreen")
 

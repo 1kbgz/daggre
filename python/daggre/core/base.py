@@ -4,9 +4,8 @@ These are plain pydantic v2 models — a `transports.Session` hosts the `Graph` 
 to it (and its nested nodes/edges) directly, so the domain carries no sync machinery of its own.
 """
 
-from uuid import uuid4
-
 from pydantic import BaseModel as PydanticBaseModel, Field, model_validator
+from uuid import uuid4
 
 
 class BaseModel(PydanticBaseModel):

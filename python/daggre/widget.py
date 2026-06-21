@@ -7,13 +7,12 @@ loop; outside a loop, call `widget.flush()`. anywidget makes this an ordinary ip
 it composes with any ipywidgets layout.
 """
 
-import asyncio
-from pathlib import Path
-from typing import Any, Optional
-
 import anywidget
+import asyncio
 import traitlets
 import transports
+from pathlib import Path
+from typing import Any, Optional
 
 STATIC = Path(__file__).parent / "static"
 _WASM = (STATIC / "transports_bg.wasm").read_bytes()

@@ -1,6 +1,5 @@
-from typing import Any, Dict, List, Optional, Union
-
 from pydantic import Field
+from typing import Any, Dict, List, Optional, Union
 
 from .base import BaseModel
 from .common import Direction

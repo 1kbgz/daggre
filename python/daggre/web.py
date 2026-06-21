@@ -7,15 +7,14 @@ daggre frontend bundle (spaday's `<dagre-graph>`).
 """
 
 import asyncio
+import transports
 from contextlib import asynccontextmanager
 from pathlib import Path
-from typing import Any, Awaitable, Callable, Optional
-
-import transports
 from starlette.applications import Starlette
 from starlette.responses import HTMLResponse
 from starlette.routing import Mount, Route, WebSocketRoute
 from starlette.staticfiles import StaticFiles
+from typing import Any, Callable, Coroutine, Optional
 
 STATIC = Path(__file__).parent / "static"
 
@@ -49,7 +48,7 @@ def serve(
     graph: Any,
     *,
     title: str = "daggre",
-    background: Optional[Callable[[Any], Awaitable[None]]] = None,
+    background: Optional[Callable[[Any], Coroutine[Any, Any, None]]] = None,
 ) -> Starlette:
     """Build a Starlette app that serves `graph` live over transports.
 
