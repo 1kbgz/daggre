@@ -10,7 +10,7 @@ description = "A convenience layer on top of `dagre-d3` (`dagre-d3-es`)."
 version = "0.1.1"
 readme = "README.md"
 license = { file = "LICENSE" }
-requires-python = ">=3.7"
+requires-python = ">=3.10"
 authors = [
     { name = "1kbgz", email = "dev@1kbgz.com" },
 ]
@@ -23,9 +23,6 @@ classifiers = [
     "Development Status :: 3 - Alpha",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "License :: OSI Approved :: Apache Software License",
@@ -33,7 +30,7 @@ classifiers = [
 dependencies = [
     "pydantic",
     "starlette",
-    "transports",
+    "transports>=0.3.0",
     "uvicorn",
 ]
 
