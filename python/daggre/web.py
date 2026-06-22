@@ -61,7 +61,7 @@ def serve(
 
     @asynccontextmanager
     async def lifespan(app: Starlette):
-        tasks = [asyncio.create_task(transports.autoflush(server))]
+        tasks = [asyncio.create_task(transports.autosync(server))]
         if background is not None:
             tasks.append(asyncio.create_task(background(graph)))
         try:
@@ -76,7 +76,7 @@ def serve(
     return Starlette(
         routes=[
             Route("/", index),
-            WebSocketRoute("/ws", transports.starlette_endpoint(server)),
+            WebSocketRoute("/ws", transports.ws_endpoint(server)),
             Mount("/static", StaticFiles(directory=STATIC)),
         ],
         lifespan=lifespan,

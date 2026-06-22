@@ -21,7 +21,7 @@ def test_serve_builds_an_app_and_serves_the_page():
 
     app = daggre.serve(g, title="demo graph", background=bg)
     assert isinstance(app, Starlette)
-    with TestClient(app) as client:  # runs the lifespan (autoflush + background)
+    with TestClient(app) as client:  # runs the lifespan (autosync + background)
         resp = client.get("/")
         assert resp.status_code == 200
         assert "demo graph" in resp.text

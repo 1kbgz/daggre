@@ -30,7 +30,7 @@ classifiers = [
 dependencies = [
     "pydantic",
     "starlette",
-    "transports>=0.3.0",
+    "transports>=0.4.0",
     "uvicorn",
 ]
 
