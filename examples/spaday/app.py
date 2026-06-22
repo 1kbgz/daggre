@@ -60,7 +60,7 @@ async def grow(g: daggre.Graph) -> None:
 
 @asynccontextmanager
 async def lifespan(app):
-    tasks = [asyncio.create_task(transports.autoflush(server)), asyncio.create_task(grow(graph))]
+    tasks = [asyncio.create_task(transports.autosync(server)), asyncio.create_task(grow(graph))]
     try:
         yield
     finally:
@@ -72,7 +72,7 @@ app = Starlette(
     routes=[
         Route("/", lambda r: FileResponse(HERE / "app.html")),
         Route("/shell.json", lambda r: JSONResponse(shell())),
-        WebSocketRoute("/ws", transports.starlette_endpoint(server)),
+        WebSocketRoute("/ws", transports.ws_endpoint(server)),
         Mount("/static", StaticFiles(directory=STATIC)),
         Mount("/spaday", StaticFiles(directory=SPADAY_DIST)),
     ],
