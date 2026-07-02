@@ -1,0 +1,3 @@
+allowBuilds:
+  '@1kbgz/transports': true
+  esbuild: true

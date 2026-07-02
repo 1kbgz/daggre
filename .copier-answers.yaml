@@ -1,0 +1,12 @@
+# Changes here will be overwritten by Copier
+_commit: 0834232
+_src_path: https://github.com/python-project-templates/base.git
+add_docs: true
+add_extension: js
+add_wiki: false
+email: dev@1kbgz.com
+github: 1kbgz
+project_description: dagre-d3 widgets
+project_name: daggre
+python_version_primary: '3.11'
+team: the daggre authors
