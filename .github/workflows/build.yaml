@@ -91,7 +91,7 @@ jobs:
         module: daggre
       if: matrix.os == 'ubuntu-latest'
 
-    - uses: actions-ext/python/test-sdist@5f78fa2cadf4dad2a7cded3c72655bcdd3dda735
+    - uses: actions-ext/python/test-sdist@6e1b91a408ea89f49bc8aff8724f83826f7b5446
       with:
         module: daggre
       if: matrix.os == 'ubuntu-latest'
