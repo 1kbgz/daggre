@@ -15,7 +15,7 @@ class TestBasic:
         g.addEdge(a_to_b_edge)
         g.addEdge(a_node, b_node)
 
-        assert sorted(list(g.nodes.values())) == [a_node, b_node]
+        assert sorted(g.nodes.values()) == [a_node, b_node]
         assert len(g.edges) == 2
         assert a_to_b_edge in g.edges
 
@@ -35,7 +35,7 @@ class TestBasic:
         g = new_graph
         g.addEdge(a_to_b_edge)
 
-        assert sorted(list(g.nodes.values())) == [a_node, b_node]
+        assert sorted(g.nodes.values()) == [a_node, b_node]
         assert len(g.edges) == 1
         assert a_to_b_edge in g.edges
 

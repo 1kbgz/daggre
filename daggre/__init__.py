@@ -2,7 +2,7 @@ __version__ = "0.1.1"
 
 from .core import Arrowhead, Direction, Edge, Graph, LabelPosition, Line, Node, Shape
 
-__all__ = ["Arrowhead", "Direction", "Edge", "Graph", "LabelPosition", "Line", "Node", "Shape", "serve", "Widget"]
+__all__ = ["Arrowhead", "Direction", "Edge", "Graph", "LabelPosition", "Line", "Node", "Shape", "Widget", "serve"]
 
 
 def __getattr__(name: str):
