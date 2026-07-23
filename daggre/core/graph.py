@@ -1,5 +1,6 @@
+from typing import Any
+
 from pydantic import Field
-from typing import Any, Dict, List, Optional, Union
 
 from .base import BaseModel
 from .common import Direction
@@ -13,10 +14,10 @@ class Graph(BaseModel):
     multigraph: bool = False
     compound: bool = False
     direction: Direction = "top-to-bottom"
-    edges: List[Edge] = Field(default_factory=list)
-    nodes: Dict[str, Node] = Field(default_factory=dict)
+    edges: list[Edge] = Field(default_factory=list)
+    nodes: dict[str, Node] = Field(default_factory=dict)
 
-    def addNode(self, node: Union[str, Node], **node_kwargs: Any) -> Node:
+    def addNode(self, node: str | Node, **node_kwargs: Any) -> Node:
         if isinstance(node, str):
             # a bare reference (e.g. from addEdge) to an existing node: don't clobber its styling
             if node in self.nodes and not node_kwargs:
@@ -31,8 +32,8 @@ class Graph(BaseModel):
 
     def addEdge(
         self,
-        edge_or_node_from_: Union[str, Edge, Node],
-        to_: Optional[Union[str, Node]] = None,
+        edge_or_node_from_: str | Edge | Node,
+        to_: str | Node | None = None,
         **edge_kwargs: Any,
     ) -> None:
         # already an Edge: ensure both endpoints are in the graph, then record it

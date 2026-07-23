@@ -9,16 +9,35 @@ describe("toGraphProps", () => {
         b: { name: "b", backgroundColor: "lightblue" },
       },
       edges: [
-        { from_: { name: "a" }, to_: { name: "b" }, line: "dash", arrowhead: "vee" },
+        {
+          from_: { name: "a" },
+          to_: { name: "b" },
+          line: "dash",
+          arrowhead: "vee",
+        },
       ],
     };
     const props = toGraphProps(model);
     expect(props.direction).toBe("left-to-right");
     expect(props.nodes).toEqual([
-      { id: "a", label: "A", shape: "house", color: "red", backgroundColor: undefined },
-      { id: "b", label: "b", shape: undefined, color: undefined, backgroundColor: "lightblue" },
+      {
+        id: "a",
+        label: "A",
+        shape: "house",
+        color: "red",
+        backgroundColor: undefined,
+      },
+      {
+        id: "b",
+        label: "b",
+        shape: undefined,
+        color: undefined,
+        backgroundColor: "lightblue",
+      },
     ]);
-    expect(props.edges).toEqual([{ from: "a", to: "b", line: "dash", arrowhead: "vee" }]);
+    expect(props.edges).toEqual([
+      { from: "a", to: "b", line: "dash", arrowhead: "vee" },
+    ]);
   });
 
   test("defaults direction/flags and tolerates an empty model", () => {
@@ -33,7 +52,11 @@ describe("toGraphProps", () => {
   });
 
   test("passes through non-default graph flags", () => {
-    const props = toGraphProps({ directed: false, multigraph: true, compound: true });
+    const props = toGraphProps({
+      directed: false,
+      multigraph: true,
+      compound: true,
+    });
     expect(props.directed).toBe(false);
     expect(props.multigraph).toBe(true);
     expect(props.compound).toBe(true);

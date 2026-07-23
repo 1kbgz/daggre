@@ -1,4 +1,4 @@
-from daggre import *  # noqa
+from daggre import *
 
 
 def test_all():

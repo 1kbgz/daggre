@@ -1,5 +1,3 @@
-from typing import Optional
-
 from .base import BaseModel
 from .common import Arrowhead, LabelPosition, Line
 from .node import Node
@@ -11,7 +9,7 @@ class Edge(BaseModel):
     tooltip: str = ""
     line: Line = "solid"
     labelposition: LabelPosition = "r"
-    labeloffset: Optional[float] = None
+    labeloffset: float | None = None
     arrowhead: Arrowhead = "vee"
 
     def __lt__(self, other: "Edge") -> bool:
