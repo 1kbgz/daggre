@@ -1,9 +1,9 @@
 <h1>
 <a href="https://github.com/1kbgz/daggre#gh-light-mode-only">
-  <img src="https://github.com/1kbgz/daggre/raw/main/docs/img/logo-light.png?raw=true#gh-light-mode-only" alt="daggre" width="50" />
+  <img src="https://github.com/1kbgz/daggre/raw/main/docs/img/logo-light.webp?raw=true#gh-light-mode-only" alt="daggre" width="50" />
 </a>
 <a href="https://github.com/1kbgz/daggre#gh-dark-mode-only">
-  <img src="https://github.com/1kbgz/daggre/raw/main/docs/img/logo-dark.png?raw=true#gh-dark-mode-only" alt="daggre" width="50" />
+  <img src="https://github.com/1kbgz/daggre/raw/main/docs/img/logo-dark.webp?raw=true#gh-dark-mode-only" alt="daggre" width="50" />
 </a>
 daggre
 </h1>
