@@ -1,0 +1,43 @@
+daggre.tests.test_core
+======================
+
+.. py:module:: daggre.tests.test_core
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   daggre.tests.test_core.TestBasic
+
+
+Module Contents
+---------------
+
+.. py:class:: TestBasic
+
+   .. py:method:: test_node_repr(a_node)
+
+
+   .. py:method:: test_edge_repr(a_to_b_edge)
+
+
+   .. py:method:: test_basic_construction(a_node, b_node, a_to_b_edge, new_graph)
+
+
+   .. py:method:: test_basic_construction_no_copies(a_node, b_node, a_to_b_edge, new_graph)
+
+
+   .. py:method:: test_basic_construction_nodes_included_when_edge_added(a_node, b_node, a_to_b_edge, new_graph)
+
+
+   .. py:method:: test_node_construction_options(new_graph)
+
+
+   .. py:method:: test_edge_construction_options(a_node, b_node, new_graph)
+
+
+   .. py:method:: test_graph_construction_options()
+
+

@@ -1,0 +1,95 @@
+daggre.widget
+=============
+
+.. py:module:: daggre.widget
+
+.. autoapi-nested-parse::
+
+   ipywidgets host: render a daggre Graph in Jupyter via anywidget over the widget's comm.
+
+   `Widget(graph)` hosts the graph in a `transports.Session`/`Server`; the transports wire rides the
+   widget's comm (the same protocol as the web host — only the transport differs). The widget object is
+   itself the transports "connection". Live updates are pushed by a background pump on the kernel's event
+   loop; outside a loop, call `widget.flush()`. anywidget makes this an ordinary ipywidgets DOMWidget, so
+   it composes with any ipywidgets layout.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   daggre.widget.STATIC
+   daggre.widget._WASM
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   daggre.widget.Widget
+
+
+Module Contents
+---------------
+
+.. py:data:: STATIC
+
+.. py:data:: _WASM
+
+.. py:class:: Widget(graph: Any, **kwargs: Any)
+
+   Bases: :py:obj:`anywidget.AnyWidget`
+
+
+   .. py:attribute:: _esm
+
+
+   .. py:attribute:: _wasm
+
+
+   .. py:attribute:: _graph
+
+
+   .. py:attribute:: _session
+
+
+   .. py:attribute:: _server
+
+
+   .. py:attribute:: _opened
+      :value: False
+
+
+
+   .. py:attribute:: _pump_task
+      :type:  asyncio.Task | None
+      :value: None
+
+
+
+   .. py:method:: _on_msg(_widget: Any, content: Any, _buffers: Any) -> None
+
+
+   .. py:method:: flush() -> None
+
+      Push pending graph changes to the frontend now (use when no event loop is pumping).
+
+
+
+   .. py:method:: close(*args: Any, **kwargs: Any) -> None
+
+      Cancel the background pump and drop the transports connection, then close the widget.
+
+
+
+   .. py:method:: _start_pump() -> None
+
+
+   .. py:method:: _pump() -> None
+      :async:
+
+
+

@@ -1,0 +1,25 @@
+daggre.tests.test_hosts
+=======================
+
+.. py:module:: daggre.tests.test_hosts
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   daggre.tests.test_hosts.test_lazy_host_adapters_are_exposed
+   daggre.tests.test_hosts.test_serve_builds_an_app_and_serves_the_page
+   daggre.tests.test_hosts.test_widget_streams_snapshot_then_patch
+
+
+Module Contents
+---------------
+
+.. py:function:: test_lazy_host_adapters_are_exposed()
+
+.. py:function:: test_serve_builds_an_app_and_serves_the_page()
+
+.. py:function:: test_widget_streams_snapshot_then_patch()
+

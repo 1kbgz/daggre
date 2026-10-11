@@ -1,0 +1,19 @@
+daggre.tests.test_all
+=====================
+
+.. py:module:: daggre.tests.test_all
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   daggre.tests.test_all.test_all
+
+
+Module Contents
+---------------
+
+.. py:function:: test_all()
+

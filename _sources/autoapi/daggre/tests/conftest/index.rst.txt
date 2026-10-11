@@ -1,0 +1,28 @@
+daggre.tests.conftest
+=====================
+
+.. py:module:: daggre.tests.conftest
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   daggre.tests.conftest.a_node
+   daggre.tests.conftest.b_node
+   daggre.tests.conftest.a_to_b_edge
+   daggre.tests.conftest.new_graph
+
+
+Module Contents
+---------------
+
+.. py:function:: a_node()
+
+.. py:function:: b_node()
+
+.. py:function:: a_to_b_edge(a_node, b_node)
+
+.. py:function:: new_graph()
+

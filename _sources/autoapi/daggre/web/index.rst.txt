@@ -1,0 +1,86 @@
+daggre.web
+==========
+
+.. py:module:: daggre.web
+
+.. autoapi-nested-parse::
+
+   Vanilla web host: serve a daggre `Graph` over transports to a browser, no notebook required.
+
+   `serve(graph)` returns a ready Starlette app (so it drops into uvicorn, or `mount`s into an existing
+   FastAPI/Starlette app). The graph is hosted in a `transports.Session`; mutating it from anywhere
+   (including a background task) is broadcast to every connected browser, which renders it with the
+   daggre frontend bundle (spaday's `<dagre-graph>`).
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   daggre.web.STATIC
+   daggre.web._PAGE
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   daggre.web.serve
+
+
+Module Contents
+---------------
+
+.. py:data:: STATIC
+
+.. py:data:: _PAGE
+   :value: Multiline-String
+
+   .. raw:: html
+
+      <details><summary>Show Value</summary>
+
+   .. code-block:: python
+
+      """<!doctype html>
+      <html lang="en">
+        <head>
+          <meta charset="utf-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <title>{title}</title>
+          <style>
+            html, body {{ margin: 0; height: 100%; font-family: system-ui, sans-serif; }}
+            #graph {{ width: 100%; height: 100%; }}
+            .node rect, .node circle, .node ellipse, .node polygon {{ stroke-width: 1.5px; }}
+            .edgePath path {{ stroke: #333; fill: none; stroke-width: 1.5px; }}
+          </style>
+        </head>
+        <body>
+          <div id="graph"></div>
+          <script type="module">
+            import {{ connect }} from "/static/index.js";
+            connect(document.getElementById("graph"), {{
+              wsUrl: `${{location.protocol === "https:" ? "wss:" : "ws:"}}//${{location.host}}/ws`,
+              wasmUrl: "/static/transports_bg.wasm",
+            }});
+          </script>
+        </body>
+      </html>"""
+
+   .. raw:: html
+
+      </details>
+
+
+
+.. py:function:: serve(graph: Any, *, title: str = 'daggre', background: collections.abc.Callable[[Any], collections.abc.Coroutine[Any, Any, None]] | None = None) -> starlette.applications.Starlette
+
+   Build a Starlette app that serves `graph` live over transports.
+
+   `background`, if given, is an async callable run with the graph as its argument for the app's
+   lifetime — use it to mutate the graph over time (the mutations stream to every client).
+
+

@@ -1,0 +1,31 @@
+daggre.core.common
+==================
+
+.. py:module:: daggre.core.common
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   daggre.core.common.Direction
+   daggre.core.common.Arrowhead
+   daggre.core.common.LabelPosition
+   daggre.core.common.Line
+   daggre.core.common.Shape
+
+
+Module Contents
+---------------
+
+.. py:data:: Direction
+
+.. py:data:: Arrowhead
+
+.. py:data:: LabelPosition
+
+.. py:data:: Line
+
+.. py:data:: Shape
+

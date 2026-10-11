@@ -1,0 +1,19 @@
+daggre.tests
+============
+
+.. py:module:: daggre.tests
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/daggre/tests/conftest/index
+   /autoapi/daggre/tests/test_all/index
+   /autoapi/daggre/tests/test_core/index
+   /autoapi/daggre/tests/test_graph_generator_helper/index
+   /autoapi/daggre/tests/test_hosts/index
+
+

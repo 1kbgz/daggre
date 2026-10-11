@@ -1,0 +1,27 @@
+daggre.core.exceptions
+======================
+
+.. py:module:: daggre.core.exceptions
+
+
+Exceptions
+----------
+
+.. autoapisummary::
+
+   daggre.core.exceptions.MalformedArgument
+
+
+Module Contents
+---------------
+
+.. py:exception:: MalformedArgument
+
+   Bases: :py:obj:`TypeError`
+
+
+   Inappropriate argument type.
+
+   Initialize self.  See help(type(self)) for accurate signature.
+
+
