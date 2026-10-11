@@ -1,6 +1,7 @@
-import { toGraphProps } from "../src/map";
+import { test, expect } from "@playwright/test";
+import { toGraphProps } from "../src/map.js";
 
-describe("toGraphProps", () => {
+test.describe("toGraphProps", () => {
   test("maps a Graph wire value onto dagre-graph props", () => {
     const model = {
       direction: "left-to-right",

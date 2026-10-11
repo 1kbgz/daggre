@@ -29,10 +29,15 @@ classifiers = [
     "Programming Language :: Python :: 3.14",
 ]
 
-dependencies = []
+dependencies = ["pydantic", "transports"]
 
 [project.optional-dependencies]
 develop = [
+    "anywidget",
+    "httpx",
+    "spaday",
+    "starlette",
+    "uvicorn",
     "build",
     "bump-my-version",
     "check-dist",
@@ -40,6 +45,7 @@ develop = [
     "hatch-js",
     "hatchling",
     "mdformat",
+    "mdformat-frontmatter",
     "mdformat-tables>=1",
     "pytest",
     "pytest-cov",
@@ -84,7 +90,7 @@ replace = '"version": "{new_version}"'
 [tool.coverage.run]
 branch = true
 omit = [
-    "daggre/tests/integration/",
+    "daggre/tests/integration/*",
 ]
 
 [tool.coverage.report]
@@ -99,6 +105,7 @@ fail_under = 50
 [tool.hatch.build]
 artifacts = [
     "daggre/extension",
+    "daggre/static",
 ]
 
 [tool.hatch.build.sources]
@@ -112,6 +119,8 @@ packages = [
 exclude = [
     "js/dist",
     "js/node_modules",
+    "js/LICENSE",
+    "js/README.md",
 ]
 
 [tool.hatch.build.targets.wheel]
@@ -128,6 +137,9 @@ build_cmd = "build"
 tool = "pnpm"
 targets = [
     "daggre/extension/cdn/index.js",
+    "daggre/static/index.js",
+    "daggre/static/anywidget.js",
+    "daggre/static/transports_bg.wasm",
 ]
 
 [tool.pytest.ini_options]
@@ -170,4 +182,3 @@ title = "daggre"
 root = "README.md"
 pages = []
 use-autoapi = true
-

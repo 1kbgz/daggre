@@ -26,6 +26,12 @@ def test_serve_builds_an_app_and_serves_the_page():
         resp = client.get("/")
         assert resp.status_code == 200
         assert "demo graph" in resp.text
+        bundle = client.get("/static/index.js")
+        assert bundle.status_code == 200
+        assert "dagre-graph" in bundle.text
+        wasm = client.get("/static/transports_bg.wasm")
+        assert wasm.status_code == 200
+        assert wasm.content.startswith(b"\x00asm")
 
 
 def test_widget_streams_snapshot_then_patch():
