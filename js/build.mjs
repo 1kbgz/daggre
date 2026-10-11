@@ -7,12 +7,16 @@ import cpy from "cpy";
 
 const BUNDLES = [
   {
-    entryPoints: ["src/ts/index.ts"],
+    entryPoints: ["src/index.js", "src/anywidget.js"],
+    outdir: "dist/static",
+  },
+  {
+    entryPoints: ["src/index.js"],
     plugins: [node_modules_external()],
     outfile: "dist/esm/index.js",
   },
   {
-    entryPoints: ["src/ts/index.ts"],
+    entryPoints: ["src/index.js"],
     outfile: "dist/cdn/index.js",
   },
 ];
@@ -37,6 +41,12 @@ async function build() {
   }
 
   await Promise.all(BUNDLES.map(bundle)).catch(() => process.exit(1));
+
+  fs.copyFileSync(
+    "node_modules/@1kbgz/transports/dist/pkg/transports_bg.wasm",
+    "dist/static/transports_bg.wasm",
+  );
+  await cpy("dist/static/*", "../daggre/static");
 
   // Copy servable assets to python extension (exclude esm/)
   fs.mkdirSync("../daggre/extension", { recursive: true });
