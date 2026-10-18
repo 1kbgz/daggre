@@ -23,6 +23,8 @@ jobs:
 
       - name: Setup Python
         uses: actions-ext/python/setup@c8228d827a81b9f8c808825328af361c45461ba3
+        with:
+          version: "3.11"
 
       - name: Download distributions
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333  # v8
